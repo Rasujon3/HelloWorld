@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button,FlatList } from 'react-native';
-import ListItems from './components/ListItems/ListItems';
-
+import { StyleSheet, View } from 'react-native';
+import InputPlace from './components/InputPlace/InputPlace';
+import PlaceList from './components/PlaceList/PlaceList';
 
 export default function App() {
   const [inputValue, setInputValue] = useState(""); 
@@ -9,42 +9,18 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+
+      <InputPlace 
+
+      inputValue={inputValue}
+      setInputValue={setInputValue}
+      palceList={palceList}
+      setPalceList={setPalceList}
       
-      <View style={styles.inputView}>
-        <TextInput
-        style={{
-          width: "80%",
-          borderBottomWidth: 1,
-          borderColor: "green",
-          padding: 7,
-        }}
-        placeholder="Add a Place..."
-        value={inputValue}
-        onChangeText={text => setInputValue(text)}
-        />
-        <Button
-          title="Add"
-          onPress={()=> {
-            if (inputValue !== "") {
-            setPalceList([...palceList, {key: Math.random().toString(), value: inputValue}]);
-            }
-          }}
-        >
+      />
 
-        </Button>
-      </View>
-
-      <FlatList style={{
-        width: "100%",
-      }}
-        data={palceList}
-        renderItem={(info)=>{
-          return (
-            <ListItems placeName={info.item.value} onItemPressed={()=> alert(info.item.value)} />
-          );
-        }}
-        />
-       
+      
+       <PlaceList palceList={palceList} />
       
       
     </View>
@@ -59,13 +35,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'column',
   },
-  inputView: {
-    padding: 20,
-    width: '100%',
-    marginTop: 50,
-    flexDirection:'row',
-    justifyContent: 'space-between',
-    alignItems:'center'
-  }
   
 });
