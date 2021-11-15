@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button,ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button,FlatList } from 'react-native';
 import ListItems from './components/ListItems/ListItems';
 
 
@@ -7,11 +7,6 @@ export default function App() {
   const [inputValue, setInputValue] = useState(""); 
   const [palceList, setPalceList] = useState([]);
 
-  const list = palceList.map((item, i) => {
-    return (
-      <ListItems placeName={item} key={i} onItemPressed={()=> alert(item)} />
-    )
-  })
   return (
     <View style={styles.container}>
       
@@ -31,7 +26,7 @@ export default function App() {
           title="Add"
           onPress={()=> {
             if (inputValue !== "") {
-            setPalceList([...palceList, inputValue]);
+            setPalceList([...palceList, {key: Math.random().toString(), value: inputValue}]);
             }
           }}
         >
@@ -39,11 +34,18 @@ export default function App() {
         </Button>
       </View>
 
-      <ScrollView style={{
+      <FlatList style={{
         width: "100%",
-      }}>
-        {list}
-      </ScrollView>
+      }}
+        data={palceList}
+        renderItem={(info)=>{
+          return (
+            <ListItems placeName={info.item.value} onItemPressed={()=> alert(info.item.value)} />
+          );
+        }}
+        />
+       
+      
       
     </View>
   );
