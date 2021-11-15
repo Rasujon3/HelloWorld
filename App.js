@@ -1,11 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
+  const handleInputChange=text => {
+    alert(text);
+  }
   return (
     <View style={styles.container}>
       <Text>Hello World</Text>
+      <Text>My First React Native App</Text>
+      <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1,width: '80%'}}
+        placeholder="I am a placeholder"
+        onChangeText={text=>handleInputChange(text)}
+      />
       <StatusBar style="auto" />
     </View>
   );
