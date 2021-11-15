@@ -3,18 +3,14 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
-  const handleInputChange=text => {
-    alert(text);
-  }
+  
   return (
     <View style={styles.container}>
-      <Text>Hello World</Text>
-      <Text>My First React Native App</Text>
-      <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1,width: '80%'}}
-        placeholder="I am a placeholder"
-        onChangeText={text=>handleInputChange(text)}
-      />
-      <StatusBar style="auto" />
+      
+      <Text>Hello Sujon</Text>
+      <Text>Hello Sujon</Text>
+      <Text>Hello Sujon</Text>
+      
     </View>
   );
 }
@@ -24,6 +20,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'column-reverse',
   },
+  testStyle:{
+    color: "green",
+  }
 });
