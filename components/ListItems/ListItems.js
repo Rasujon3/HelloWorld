@@ -1,11 +1,15 @@
 import React from 'react';
-import { View,Text,StyleSheet,TouchableOpacity } from 'react-native';
+import { View,Text,StyleSheet,TouchableOpacity,Image } from 'react-native';
 
 const ListItems = props => {
     return (
         <TouchableOpacity onPress={props.onItemPressed}>
             <View style={styles.listItems} >
-            <Text>
+                <Image source={props.image} style={{
+                    width: 50,
+                    height: 50,
+                }} />
+            <Text style={{paddingLeft: 15 }}>
                 {props.placeName}
             </Text>
             </View>
@@ -20,6 +24,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: "#eee",
         margin: 5,
+        flexDirection: "row"
         
     }
 })

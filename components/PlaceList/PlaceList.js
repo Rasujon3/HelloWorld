@@ -12,7 +12,8 @@ const PlaceList = (props) => {
             renderItem={(info)=>{
               return (
                 <ListItems placeName={info.item.value} 
-                onItemPressed={()=> props.handleSelecetedPalce(info.item.key)} />
+                onItemPressed={()=> props.handleSelecetedPalce(info.item.key)}
+                image={info.item.image} />
               );
             }}
             />
