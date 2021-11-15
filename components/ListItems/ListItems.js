@@ -1,13 +1,16 @@
 import React from 'react';
-import { View,Text,StyleSheet } from 'react-native';
+import { View,Text,StyleSheet,TouchableOpacity } from 'react-native';
 
 const ListItems = props => {
     return (
-        <View style={styles.listItems}>
+        <TouchableOpacity onPress={props.onItemPressed}>
+            <View style={styles.listItems} >
             <Text>
                 {props.placeName}
             </Text>
-        </View>
+            </View>
+        </TouchableOpacity>
+        
     );
 };
 
@@ -16,7 +19,8 @@ const styles = StyleSheet.create({
         width: "100%",
         padding: 10,
         backgroundColor: "#eee",
-        margin: 5
+        margin: 5,
+        
     }
 })
 

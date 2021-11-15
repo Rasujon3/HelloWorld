@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button,ScrollView } from 'react-native';
 import ListItems from './components/ListItems/ListItems';
 
 
@@ -9,7 +9,7 @@ export default function App() {
 
   const list = palceList.map((item, i) => {
     return (
-      <ListItems placeName={item} key={i} />
+      <ListItems placeName={item} key={i} onItemPressed={()=> alert(item)} />
     )
   })
   return (
@@ -38,11 +38,12 @@ export default function App() {
 
         </Button>
       </View>
-      <View style={{
+
+      <ScrollView style={{
         width: "100%",
       }}>
         {list}
-      </View>
+      </ScrollView>
       
     </View>
   );
