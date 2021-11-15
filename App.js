@@ -1,9 +1,17 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import ListItems from './components/ListItems/ListItems';
+
 
 export default function App() {
   const [inputValue, setInputValue] = useState(""); 
   const [palceList, setPalceList] = useState([]);
+
+  const list = palceList.map((item, i) => {
+    return (
+      <ListItems placeName={item} key={i} />
+    )
+  })
   return (
     <View style={styles.container}>
       
@@ -29,6 +37,11 @@ export default function App() {
         >
 
         </Button>
+      </View>
+      <View style={{
+        width: "100%",
+      }}>
+        {list}
       </View>
       
     </View>
