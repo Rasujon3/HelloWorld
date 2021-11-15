@@ -1,15 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 export default function App() {
-  
+  const [inputValue, setInputValue] = useState(""); 
+  const [palceList, setPalceList] = useState([]);
   return (
     <View style={styles.container}>
       
-      <Text>Hello Sujon</Text>
-      <Text>Hello Sujon</Text>
-      <Text>Hello Sujon</Text>
+      <View style={styles.inputView}>
+        <TextInput
+        style={{
+          width: "80%",
+          borderBottomWidth: 1,
+          borderColor: "green",
+          padding: 7,
+        }}
+        placeholder="Add a Place..."
+        value={inputValue}
+        onChangeText={text => setInputValue(text)}
+        />
+        <Button
+          title="Add"
+          onPress={()=> {
+            if (inputValue !== "") {
+            setPalceList([...palceList, inputValue]);
+            }
+          }}
+        >
+
+        </Button>
+      </View>
       
     </View>
   );
@@ -21,9 +41,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    flexDirection: 'column-reverse',
+    flexDirection: 'column',
   },
-  testStyle:{
-    color: "green",
+  inputView: {
+    padding: 20,
+    width: '100%',
+    marginTop: 50,
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    alignItems:'center'
   }
+  
 });
