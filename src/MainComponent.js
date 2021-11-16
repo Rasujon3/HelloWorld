@@ -1,16 +1,32 @@
 import React, {useState} from 'react';
 import { StyleSheet, View } from 'react-native';
-import InputPlace from '../components/InputPlace/InputPlace';
-import PlaceList from '../components/PlaceList/PlaceList';
-import PlaceDetail from '../components/PlaceDetail/PlaceDetail';
+import InputPlace from './components/InputPlace/InputPlace';
+import PlaceList from './components/PlaceList/PlaceList';
+import PlaceDetail from './components/PlaceDetail/PlaceDetail';
+import { connect } from 'react-redux';
+import { addPlace,deletePlace } from './redux/actionCreators';
+
+
+const mapStateToProps = state => {
+  return {
+    palceList: state.palceList
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addPlace: place => dispatch(addPlace(place)),
+    deletePlace: key => dispatch(deletePlace(key)),
+  }
+}
+
 
 const MainComponent = (props) => {
     const [inputValue, setInputValue] = useState(""); 
-    const [palceList, setPalceList] = useState([]);
     const [selectedPlace, setSelectedPlace] = useState(null);
   
     const handleSelecetedPalce = key => {
-      const place = palceList.find(place => {
+      const place = props.palceList.find(place => {
         return place.key === key;
       })
       setSelectedPlace(place);
@@ -20,12 +36,9 @@ const MainComponent = (props) => {
       setSelectedPlace(null);
     }
   
-    const handleDeleteItem = (key) => {
-      setPalceList(
-        palceList.filter(place => place.key !== key)
-      );
+    const handleDeleteItem = (key) => {  
+      props.deletePlace(key);
       setSelectedPlace(null);
-  
     }
   
     let PlaceDetails = null;
@@ -47,11 +60,11 @@ const MainComponent = (props) => {
   
           inputValue={inputValue}
           setInputValue={setInputValue}
-          palceList={palceList}
-          setPalceList={setPalceList}
+          palceList={props.palceList}
+          addPlace={props.addPlace}
         
         /> 
-         <PlaceList palceList={palceList} handleSelecetedPalce={handleSelecetedPalce} />
+         <PlaceList palceList={props.palceList} handleSelecetedPalce={handleSelecetedPalce} />
       </View>
     );
 };
@@ -67,4 +80,4 @@ const styles = StyleSheet.create({
     
   });
 
-export default MainComponent;
+export default connect(mapStateToProps,mapDispatchToProps)(MainComponent);

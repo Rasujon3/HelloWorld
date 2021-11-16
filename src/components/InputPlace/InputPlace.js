@@ -20,13 +20,13 @@ const InputPlace = (props) => {
           title="Add"
           onPress={()=> {
             if (props.inputValue !== "") {
-            props.setPalceList([...props.palceList, {
+            props.addPlace({
               key: Math.random().toString(), 
               value: props.inputValue,
               image: {
                 uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dhaka_14th_March_%2832624769393%29.jpg/1200px-Dhaka_14th_March_%2832624769393%29.jpg"
               }
-            }]);
+            });
             props.setInputValue("");
             }
           }}
