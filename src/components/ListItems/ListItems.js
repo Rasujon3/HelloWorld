@@ -5,7 +5,7 @@ const ListItems = props => {
     return (
         <TouchableOpacity onPress={props.onItemPressed}>
             <View style={styles.listItems} >
-                <Image source={props.image} style={{
+                <Image source={{uri: props.image}} style={{
                     width: 50,
                     height: 50,
                 }} />
@@ -14,7 +14,7 @@ const ListItems = props => {
             </Text>
             </View>
         </TouchableOpacity>
-        
+
     );
 };
 
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#eee",
         margin: 5,
         flexDirection: "row"
-        
+
     }
 })
 
