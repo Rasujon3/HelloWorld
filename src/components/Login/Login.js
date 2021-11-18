@@ -3,9 +3,9 @@ import { Button, Text, TextInput, View,StyleSheet, TouchableOpacity, ImageBackgr
 import backgroundImage from '../../images/sujon.jpg';
 
 const Login = (props) => {
-    const [authState, setAuthState] = useState({
+    const [authStates, setAuthStates] = useState({
         mode: "login",
-        input: {
+        inputs: {
             email: "",
             password: "",
             confirmPassword: "",
@@ -13,18 +13,59 @@ const Login = (props) => {
     })
 
     const switchViews=()=>{
-        setAuthState({
-            ...authState,
-            mode: authState.mode === "login" ? "signup" : 'login'
+        setAuthStates({
+            ...authStates,
+            mode: authStates.mode === "login" ? "signup" : 'login',
+            inputs: {
+                email: "",
+                password: "",
+                confirmPassword: "",
+            }
         })
     }
+
+    const updateInputs = (value,name) => {
+        setAuthStates({
+            ...authStates,
+            inputs : {
+                ...authStates.inputs,
+                [name]: value
+            }
+        })
+    }
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const handleAuth = () => {
+        const email = authStates.inputs.email;
+        const password = authStates.inputs.password;
+        const confirmPassword = authStates.inputs.confirmPassword;
+
+        if (email !== "" & password !== "") {
+            if (re.test(email)) {
+                if (authStates.mode === 'login') {
+                    props.navigation.navigate("Home");
+                } else {
+                    if (password === confirmPassword) {
+                        props.navigation.navigate("Home");
+                    } else {
+                        alert("Password fields doesn't Match!")
+                    }
+                }
+            } else {
+                alert("Invalid Email!");
+            }
+        } else {
+            alert("Input all the fields!");
+        }
+    }
+
     let confirmPassField = null;
-    if (authState.mode === "signup") {
+    if (authStates.mode === "signup") {
         confirmPassField = (
             <TextInput 
                 style={styles.input}
                 placeholder="Confirm Password"
-                value={authState.input.confirmPassword}
+                value={authStates.inputs.confirmPassword}
+                onChangeText={value => updateInputs(value, "confirmPassword")}
             />
         );
     }
@@ -42,24 +83,32 @@ const Login = (props) => {
                         () => switchViews()
                     }
                 >
-                <Text style={styles.btnStyle}>{authState.mode==="login" ? "Swich to Sign Up" : "Swich to Login"}</Text>
+                <Text style={styles.btnStyle}>{authStates.mode==="login" ? "Swich to Sign Up" : "Swich to Login"}</Text>
                 </TouchableOpacity>
                 <TextInput 
                     style={styles.input}
                     placeholder="Your Email Address"
-                    value={authState.input.email}
+                    value={authStates.inputs.email}
+                    onChangeText={value => updateInputs(value, "email")}
+
                 />
                 <TextInput 
                     style={styles.input}
                     placeholder="Password"
-                    value={authState.input.password}
+                    value={authStates.inputs.password}
+                    onChangeText={value => updateInputs(value, "password")}
+
 
                 />
 
                 {confirmPassField}
 
-                <TouchableOpacity style={styles.btnContainer}>
-                    <Text style={styles.btnStyle}>{authState.mode==="login" ? "Login" : "Sign Up"}</Text>
+                <TouchableOpacity style={styles.btnContainer}
+                onPress={()=> {
+                    handleAuth();
+                }}
+                >
+                    <Text style={styles.btnStyle}>{authStates.mode==="login" ? "Login" : "Sign Up"}</Text>
                 </TouchableOpacity>
             </View>
         </ImageBackground>
