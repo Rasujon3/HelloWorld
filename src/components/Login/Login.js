@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import backgroundImage from '../../images/sujon.jpg';
 import {trySignUp} from '../../redux/actionCreators';
 
+const mapStateToProps = state => {
+    return {
+        isAuth : state.isAuth
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         trySignUp: (email,password) => dispatch(trySignUp(email,password))
@@ -50,13 +56,17 @@ const Login = (props) => {
         if (email !== "" & password !== "") {
             if (re.test(email)) {
                 if (authStates.mode === 'login') {
+                    if (props.isAuth) {
                     props.navigation.navigate("Home");
+                    } else {
+                        alert("Login Failed!");
+                    }
                 } else {
                     if (password.length > 6 || password === confirmPassword) {
                         props.trySignUp(email,password);
-                        props.navigation.navigate("Home");
-                    }else {
-                        alert("Password Must be atleast 6 characters! or Password fields doesn't Match!");
+                         
+                    } else {
+                        alert("Password fields doesn't Match!");
                     }
                 }
             } else {
@@ -158,4 +168,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(null,mapDispatchToProps)(Login);
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
