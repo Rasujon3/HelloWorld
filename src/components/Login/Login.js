@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Button, Text, TextInput, View,StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import backgroundImage from '../../images/sujon.jpg';
-import {trySignUp} from '../../redux/actionCreators';
+import {tryAuth} from '../../redux/actionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        trySignUp: (email,password) => dispatch(trySignUp(email,password))
+        tryAuth: (email,password,mode) => dispatch(tryAuth(email,password,mode))
     }
 }
 
@@ -56,14 +56,10 @@ const Login = (props) => {
         if (email !== "" & password !== "") {
             if (re.test(email)) {
                 if (authStates.mode === 'login') {
-                    if (props.isAuth) {
-                    props.navigation.navigate("Home");
-                    } else {
-                        alert("Login Failed!");
-                    }
+                    props.tryAuth(email,password, "login");
                 } else {
-                    if (password.length > 6 || password === confirmPassword) {
-                        props.trySignUp(email,password);
+                    if (password === confirmPassword) {
+                        props.tryAuth(email,password, "signup");
                          
                     } else {
                         alert("Password fields doesn't Match!");

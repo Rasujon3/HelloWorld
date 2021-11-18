@@ -51,8 +51,15 @@ export const authUser = () => {
     }
 }
 
-export const trySignUp = (email,password) => dispatch => {
-    fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBXZDt66skl5nArpRpMgFZORwNg6iU3NEw", {
+export const tryAuth = (email,password, mode) => dispatch => {
+    let url = "";
+    const API_KEY = "AIzaSyBXZDt66skl5nArpRpMgFZORwNg6iU3NEw";
+    if (mode == "signup") {
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + API_KEY;
+    } else if (mode == "login"){
+        url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + API_KEY;
+    }
+    fetch(url, {
         method: "POST",
         body: JSON.stringify({
             email: email,
