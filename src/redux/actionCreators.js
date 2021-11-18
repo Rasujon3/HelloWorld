@@ -1,8 +1,9 @@
 import { navigate } from '../../App';
 import * as actionTypes from './actionType';
 
-export const addPlace = place => dispatch => {
-    fetch("https://my-places-d6079-default-rtdb.asia-southeast1.firebasedatabase.app/places.json", {
+export const addPlace = place => (dispatch,getState) => {
+    let token = getState().token;
+    fetch(`https://my-places-d6079-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`, {
         method: "POST",
         body: JSON.stringify(place)
     })
@@ -11,8 +12,9 @@ export const addPlace = place => dispatch => {
         .then(data => console.log(data))
     }
 
-export const loadPlaces = () => dispatch => {
-    fetch("https://my-places-d6079-default-rtdb.asia-southeast1.firebasedatabase.app/places.json")
+export const loadPlaces = () => (dispatch,getState) => {
+    let token = getState().token;
+    fetch(`https://my-places-d6079-default-rtdb.asia-southeast1.firebasedatabase.app/places.json?auth=${token}`)
     .catch(err => {
         alert("Something went wrong, sorry");
         console.log(err);
@@ -45,9 +47,10 @@ export const deletePlace = key => {
     }
 }
 
-export const authUser = () => {
+export const authUser = (token) => {
     return {
-        type: actionTypes.AUTHENTICATE_USER
+        type: actionTypes.AUTHENTICATE_USER,
+        payload: token
     }
 }
 
@@ -79,8 +82,8 @@ export const tryAuth = (email,password, mode) => dispatch => {
             if (data.error) {
                 alert(data.error.message)
             } else {
+                dispatch(authUser(data.idToken));
                 navigate("Home");
-                dispatch(authUser());
             }
             console.log(data)
         })
