@@ -1,4 +1,4 @@
-import { navigate } from '../../App';
+import { navigate } from '../NavigationRoot';
 import * as actionTypes from './actionType';
 
 export const addPlace = place => (dispatch,getState) => {
@@ -83,7 +83,7 @@ export const tryAuth = (email,password, mode) => dispatch => {
                 alert(data.error.message)
             } else {
                 dispatch(authUser(data.idToken));
-                navigate("Home");
+                navigate("Places");
             }
             console.log(data)
         })
